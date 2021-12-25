@@ -1,7 +1,8 @@
 # Фронтенд для дипломного проекта Movies Explorer
 
 ----
-[Ссылка на проект]
+[Ссылка на проект]:
+https://sergbor.movies.nomoredomains.rocks/
 
 ### Используемые технологии:
 
