@@ -1,0 +1,54 @@
+.navtab {
+  background-color: #000;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  align-self: stretch;
+}
+
+.navtab__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 66px;
+}
+
+.navtab__list {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  padding: 0 0 0 40px;
+}
+
+.navtab__list-item {
+  margin-right: 40px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: underline;
+}
+
+.navtab__list-item:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.navtab__list-item-link {
+  color: #ffffff;
+}
+
+.navtab__list-item-link:visited {
+  color: #ffffff;
+}
+
+@media screen and (max-width: 500px) {
+  .navtab__list {
+    padding-left: 22px;
+  }
+
+  .navtab__list-item {
+    font-size: 11px;
+    margin-right: 24px;
+  }
+}
