@@ -111,7 +111,7 @@ function Movies() {
       <section className="movies">
         <SearchForm />
         <Preloader />
-        <MoviesCardList movies={movies} generalClass="movies" />
+        <MoviesCardList movies={movies} isSavedMoviesPage={false} />
       </section>
       <Footer />
     </>

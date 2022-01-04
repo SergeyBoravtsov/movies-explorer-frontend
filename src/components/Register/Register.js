@@ -5,7 +5,7 @@ import Form from "../Form/Form";
 
 function Register() {
   return (
-    <>
+    <div className="register">
       <Header headerText="Добро пожаловать!" />
       <Form
         formName="register"
@@ -23,7 +23,7 @@ function Register() {
           Что-то пошло не так...
         </span>
       </Form>
-    </>
+    </div>
   );
 }
 

@@ -1,26 +1,18 @@
 import React from "react";
 import "./Header.css";
 import { Link, Route, Switch } from "react-router-dom";
-import logoMainPage from "../../images/logo-main-page.svg";
-import logoAnotherPage from "../../images/logo-another-page.svg";
+import logo from "../../images/logo.svg";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-function Header({ isLoggedIn, isMainPage }) {
+function Header({ isLoggedIn }) {
   return (
     <Switch>
       <Route exact path="/">
         <header className="header header_page_main">
           <div className="header__container">
-            {isMainPage && (
-              <Link className="header__logo" to="/">
-                <img src={logoMainPage} alt="логотип главной страницы" />
-              </Link>
-            )}
-            {!isMainPage && (
-              <Link className="header__logo" to="/">
-                <img src={logoAnotherPage} alt="логотип остальных страниц" />
-              </Link>
-            )}
+            <Link className="header__logo" to="/">
+              <img src={logo} alt="логотип" />
+            </Link>
             {!isLoggedIn && (
               <nav className="header__buttons">
                 <Link to="/signup" className="header__button-register">
@@ -38,32 +30,18 @@ function Header({ isLoggedIn, isMainPage }) {
 
       <Route path={["/movies", "/saved-movies", "/profile"]}>
         <header className="header header_page_authorized">
-          {isMainPage && (
-            <Link className="header__logo" to="/">
-              <img src={logoMainPage} alt="логотип главной страницы" />
-            </Link>
-          )}
-          {!isMainPage && (
-            <Link className="header__logo" to="/">
-              <img src={logoAnotherPage} alt="логотип остальных страниц" />
-            </Link>
-          )}
+          <Link className="header__logo" to="/">
+            <img src={logo} alt="логотип" />
+          </Link>
           <BurgerMenu />
         </header>
       </Route>
 
       <Route path={["/signup", "/signin"]}>
         <header className="header header_page_notAuthorized">
-          {isMainPage && (
-            <Link className="header__logo" to="/">
-              <img src={logoMainPage} alt="логотип главной страницы" />
-            </Link>
-          )}
-          {!isMainPage && (
-            <Link className="header__logo" to="/">
-              <img src={logoAnotherPage} alt="логотип остальных страниц" />
-            </Link>
-          )}
+          <Link className="header__logo header__logo_page_signin-signup" to="/">
+            <img src={logo} alt="логотип" />
+          </Link>
           <Route path={"/signup"}>
             <h2 className="header__title">Добро пожаловать!</h2>
           </Route>

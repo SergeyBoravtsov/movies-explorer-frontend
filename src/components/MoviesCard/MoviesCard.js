@@ -1,43 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MoviesCard.css";
-import { Route } from "react-router-dom";
 
-function MoviesCard(card) {
-  // функция для изменения цвета лайка
-  const [isLiked, setIsLiked] = React.useState(false);
-  const changeLikeColor = () => {
-    if (isLiked === false) {
-      setIsLiked(true);
-    } else {
-      setIsLiked(false);
-    }
-  };
+function MovieCard({ card, isSavedMoviesPage }) {
+  const [isSavedMovie, setIsSavedMovie] = useState(false);
+
+  function toggleSavedMovie() {
+    setIsSavedMovie(!isSavedMovie);
+  }
 
   return (
-    <li className="card">
-      <img
-        className="card__photo"
-        src={card.card.image}
-        alt={card.card.nameRU}
-      />
-      <div className="card__container">
-        <h3 className="card__title">{card.card.nameRU}</h3>
-
-        <Route path="/movies">
-          <button
-            className={`card__button card__button_type_like ${
-              isLiked && "card__liked"
-            }`}
-            onClick={changeLikeColor}
-          ></button>
-        </Route>
-        <Route path="/saved-movies">
-          <button className={`card__button card__button_type_remove`}></button>
-        </Route>
-      </div>
-      <p className="card__duration">{card.card.duration}</p>
+    <li className="movie-card">
+      <figure className="movie-card__container">
+        <figcaption className="movie-card__info">
+          <h3 className="movie-card__title">{card.nameRU}</h3>
+          <p className="movie-card__duration">{card.duration}</p>
+        </figcaption>
+        <img src={card.image} className="movie-card__image" alt={card.nameRU} />
+        <button
+          className={`movie-card__button
+                ${isSavedMovie && "movie-card__button_type_in-saved-movies"}
+                ${
+                  isSavedMoviesPage &&
+                  "movie-card__button_type_remove-saved-movie"
+                }`}
+          onClick={toggleSavedMovie}
+        >
+          {isSavedMovie || isSavedMoviesPage ? "" : "Сохранить"}
+        </button>
+      </figure>
     </li>
   );
 }
 
-export default MoviesCard;
+export default MovieCard;

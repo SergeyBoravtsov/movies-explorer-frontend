@@ -5,7 +5,7 @@ import Form from "../Form/Form";
 
 function Login() {
   return (
-    <>
+    <div className="login">
       <Header headerText="Рады видеть!" />
       <Form
         formName="login"
@@ -14,7 +14,7 @@ function Login() {
         link="signup"
         linkText="Регистрация"
       ></Form>
-    </>
+    </div>
   );
 }
 

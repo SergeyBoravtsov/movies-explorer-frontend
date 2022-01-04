@@ -1,14 +1,12 @@
-import "./Promo.css";
+import React from 'react';
+import promoLogo from '../../images/promo-logo.svg';
+import './Promo.css';
 
 function Promo() {
   return (
     <section className="promo">
-      <div className="promo__container">
-        <h1 className="promo__title">
-          Учебный проект студента факультета Веб-разработки.
-        </h1>
-        <div className="promo__big-logo"></div>
-      </div>
+      <h1 className="promo__title">Учебный проект студента факультета Веб-разработки.</h1>
+      <img className="promo__img" src={promoLogo} alt="Декоративная картинка" />
     </section>
   );
 }

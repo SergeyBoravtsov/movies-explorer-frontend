@@ -42,10 +42,6 @@
   text-decoration: none;
 }
 
-.portfolio__list-link:visited {
-  color: #000;
-}
-
 .portfolio__list-link:hover {
   opacity: 0.7;
   cursor: pointer;

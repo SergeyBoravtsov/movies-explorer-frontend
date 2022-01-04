@@ -46,7 +46,7 @@ function SavedMovies() {
       <section className="saved-movies">
         <SearchForm />
         <Preloader />
-        <MoviesCardList movies={movies} generalClass="saved-movies" />
+        <MoviesCardList movies={movies} isSavedMoviesPage={true}/>
       </section>
       <Footer />
     </>

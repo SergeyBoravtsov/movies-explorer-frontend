@@ -2,17 +2,17 @@ import React from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({ movies, generalClass }) {
+function MoviesCardList({ movies, isSavedMoviesPage }) {
   return (
     <>
-      <ul className={`movies-list ${generalClass}__list`}>
+      <ul className="movies-list">
         {movies.map((card, i) => (
-          <MoviesCard card={card} key={i}/>
+          <MoviesCard card={card} key={i} isSavedMoviesPage={isSavedMoviesPage} />
         ))}
       </ul>
       <button
         type="button"
-        className={`another-button ${generalClass}__button`}
+        className="another-button"
       >
         Ещё
       </button>
