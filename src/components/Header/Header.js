@@ -23,7 +23,7 @@ function Header({ isLoggedIn }) {
                 </Link>
               </nav>
             )}
-            {isLoggedIn && <BurgerMenu />}
+            {isLoggedIn && <BurgerMenu isLoggedIn={isLoggedIn} />}
           </div>
         </header>
       </Route>
@@ -33,7 +33,7 @@ function Header({ isLoggedIn }) {
           <Link className="header__logo" to="/">
             <img src={logo} alt="логотип" />
           </Link>
-          <BurgerMenu />
+          <BurgerMenu isLoggedIn={isLoggedIn} />
         </header>
       </Route>
 

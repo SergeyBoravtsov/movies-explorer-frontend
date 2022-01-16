@@ -6,6 +6,16 @@
   align-items: center;
 }
 
+.saved-movies__text {
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #ffffff;
+  align-self: start;
+}
+
 @media screen and (max-width: 768px) {
   .saved-movies {
     width: 93%;
@@ -15,5 +25,10 @@
 @media screen and (max-width: 500px) {
   .saved-movies {
     width: 94%;
+  }
+
+  .saved-movies__text {
+    font-size: 12px;
+    line-height: 15px;
   }
 }

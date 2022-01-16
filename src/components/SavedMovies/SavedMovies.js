@@ -1,52 +1,77 @@
 import React from "react";
 import "./SavedMovies.css";
-
 import Header from "../Header/Header";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
-import Preloader from "../Preloader/Preloader";
-import image_1 from "../../images/movies-thumbnails/film_1.png";
-import image_2 from "../../images/movies-thumbnails/film_2.png";
-import image_3 from "../../images/movies-thumbnails/film_3.png";
-import image_4 from "../../images/movies-thumbnails/film_4.png";
-import image_5 from "../../images/movies-thumbnails/film_5.png";
+import {
+  shortMoviesSearchHandle,
+  moviesSearchHandle,
+} from "../../helper/searchFunctions";
 
-function SavedMovies() {
-  const movies = [
-    {
-      nameRU: "33 слова о дизайне",
-      duration: "1ч 42м",
-      image: image_1,
-    },
-    {
-      nameRU: "Киноальманах «100 лет дизайна»",
-      duration: "1ч 42м",
-      image: image_2,
-    },
-    {
-      nameRU: "В погоне за Бенкси",
-      duration: "1ч 42м",
-      image: image_3,
-    },
-    {
-      nameRU: "Баския: Взрыв реальности",
-      duration: "1ч 42м",
-      image: image_4,
-    },
-    {
-      nameRU: "Бег это свобода",
-      duration: "1ч 42м",
-      image: image_5,
-    },
-  ];
+function SavedMovies({ savedMovies, deleteFilm, isLoggedIn }) {
+  const [filteredSavedMovies, setFilteredSavedMovies] =
+    React.useState(savedMovies);
+  const [filteredSavedAllMovies, setFilteredSavedAllMovies] =
+    React.useState(savedMovies);
+  const [shortFilteredSavedMovies, setShortFilteredSavedMovies] =
+    React.useState([]);
+  const [isCheckBoxClicked, setIsCheckBoxClicked] = React.useState(false);
+  const [isFilteredMovies, setIsFilteredMovies] = React.useState(false);
+
+  // создаем массив с фильтрованными короткометражками
+  React.useEffect(() => {
+    setShortFilteredSavedMovies(shortMoviesSearchHandle(filteredSavedMovies));
+  }, [filteredSavedMovies]);
+
+  React.useEffect(() => {
+    if (isCheckBoxClicked && filteredSavedMovies) {
+      setFilteredSavedMovies(shortFilteredSavedMovies);
+    } else {
+      setFilteredSavedMovies(filteredSavedAllMovies);
+    }
+  }, [
+    isCheckBoxClicked,
+    filteredSavedMovies,
+    shortFilteredSavedMovies,
+    filteredSavedAllMovies,
+  ]);
+
+  const searchHandle = (searchValue) => {
+    const filteredSavedMovies = moviesSearchHandle(savedMovies, searchValue);
+    setFilteredSavedMovies(filteredSavedMovies);
+    setFilteredSavedAllMovies(filteredSavedMovies);
+    setIsFilteredMovies(true);
+  };
+
+  const clearSearchHandle = () => {
+    setIsFilteredMovies(false);
+  };
+
   return (
     <>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <section className="saved-movies">
-        <SearchForm />
-        <Preloader />
-        <MoviesCardList movies={movies} isSavedMoviesPage={true}/>
+        <SearchForm
+          searchHandle={searchHandle}
+          setIsCheckBoxClicked={setIsCheckBoxClicked}
+          isCheckBoxClicked={isCheckBoxClicked}
+          clearSearchHandle={clearSearchHandle}
+        />
+
+        {savedMovies.length === 0 ||
+          (filteredSavedMovies.length === 0 && (
+            <p className="saved-movies__text">Фильмы не найдены</p>
+          ))}
+
+        {savedMovies.length !== 0 && (
+          <MoviesCardList
+            savedMovies={savedMovies}
+            deleteFilm={deleteFilm}
+            filteredSavedMovies={filteredSavedMovies}
+            isFilteredMovies={isFilteredMovies}
+          />
+        )}
       </section>
       <Footer />
     </>

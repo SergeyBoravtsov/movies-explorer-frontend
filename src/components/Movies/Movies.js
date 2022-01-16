@@ -5,113 +5,168 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
-import image_1 from "../../images/movies-thumbnails/film_1.png";
-import image_2 from "../../images/movies-thumbnails/film_2.png";
-import image_3 from "../../images/movies-thumbnails/film_3.png";
-import image_4 from "../../images/movies-thumbnails/film_4.png";
-import image_5 from "../../images/movies-thumbnails/film_5.png";
-import image_6 from "../../images/movies-thumbnails/film_6.png";
-import image_7 from "../../images/movies-thumbnails/film_7.png";
-import image_8 from "../../images/movies-thumbnails/film_8.png";
-import image_9 from "../../images/movies-thumbnails/film_9.png";
-import image_10 from "../../images/movies-thumbnails/film_10.png";
-import image_11 from "../../images/movies-thumbnails/film_11.png";
-import image_12 from "../../images/movies-thumbnails/film_12.png";
-import image_13 from "../../images/movies-thumbnails/film_13.png";
-import image_14 from "../../images/movies-thumbnails/film_14.png";
-import image_15 from "../../images/movies-thumbnails/film_15.png";
-import image_16 from "../../images/movies-thumbnails/film_16.png";
+import {
+  CARDS_QUANTITY_MAX,
+  ADDITIONAL_CARDS_QUANTITY_MAX,
+  WINDOW_WIDTH_MAX,
+  ADDITIONAL_CARDS_QUANTITY_MIDDLE,
+  CARDS_QUANTITY_MIDDLE,
+  WINDOW_WIDTH_MIDDLE,
+  CARDS_QUANTITY_SMALL,
+  ADDITIONAL_CARDS_QUANTITY_SMALL,
+} from "../../helper/MoviesConstants";
+import {
+  shortMoviesSearchHandle,
+  moviesSearchHandle,
+} from "../../helper/searchFunctions";
 
-function Movies() {
-  const movies = [
-    {
-      nameRU: "33 слова о дизайне",
-      duration: "1ч 42м",
-      image: image_1,
-    },
-    {
-      nameRU: "Киноальманах «100 лет дизайна»",
-      duration: "1ч 42м",
-      image: image_2,
-    },
-    {
-      nameRU: "В погоне за Бенкси",
-      duration: "1ч 42м",
-      image: image_3,
-    },
-    {
-      nameRU: "Баския: Взрыв реальности",
-      duration: "1ч 42м",
-      image: image_4,
-    },
-    {
-      nameRU: "Бег это свобода",
-      duration: "1ч 42м",
-      image: image_5,
-    },
-    {
-      nameRU: "Книготорговцы",
-      duration: "1ч 42м",
-      image: image_6,
-    },
-    {
-      nameRU: "Когда я думаю о Германии ночью",
-      duration: "1ч 42м",
-      image: image_7,
-    },
-    {
-      nameRU: "Gimme Danger: История Игги и The Stooges",
-      duration: "1ч 42м",
-      image: image_8,
-    },
-    {
-      nameRU: "Дженис: Маленькая девочка грустит",
-      duration: "1ч 42м",
-      image: image_9,
-    },
-    {
-      nameRU: "Соберись перед прыжком",
-      duration: "1ч 42м",
-      image: image_10,
-    },
-    {
-      nameRU: "Пи Джей Харви: A dog called money",
-      duration: "1ч 42м",
-      image: image_11,
-    },
-    {
-      nameRU: "По волнам: Искусство звука в кино",
-      duration: "1ч 42м",
-      image: image_12,
-    },
-    {
-      nameRU: "Рудбой",
-      duration: "1ч 42м",
-      image: image_13,
-    },
-    {
-      nameRU: "Скейт — кухня",
-      duration: "1ч 42м",
-      image: image_14,
-    },
-    {
-      nameRU: "Война искусств",
-      duration: "1ч 42м",
-      image: image_15,
-    },
-    {
-      nameRU: "Зона",
-      duration: "1ч 42м",
-      image: image_16,
-    },
-  ];
+function Movies({
+  movies,
+  isLoading,
+  createFilm,
+  savedMovies,
+  deleteFilm,
+  isLoggedIn,
+}) {
+  const [filteredMovies, setFilteredMovies] = React.useState([]);
+  const [allFilteredMovies, setAllFilteredMovies] = React.useState([]);
+  const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
+  const [isCheckBoxClicked, setIsCheckBoxClicked] = React.useState(false);
+  const [isFilteredMovies, setIsFilteredMovies] = React.useState(false);
+  const [moviesIndexShown, setMoviesIndexShown] = React.useState(0);
+  const [cardQuantity, setCardQuantity] = React.useState(0);
+  const [additionalCardQuantity, setAdditionalCardQuantity] = React.useState(0);
+
+  // создаем массив с фильтрованными короткометражками
+  React.useEffect(() => {
+    setShortFilteredMovies(shortMoviesSearchHandle(allFilteredMovies));
+  }, [allFilteredMovies]);
+
+  React.useEffect(() => {
+    if (isCheckBoxClicked && filteredMovies) {
+      setFilteredMovies(shortFilteredMovies);
+    } else {
+      setFilteredMovies(allFilteredMovies);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCheckBoxClicked, allFilteredMovies]);
+
+  window.addEventListener("resize", resizeThrottler, false);
+  let resizeTimeout;
+  function resizeThrottler() {
+    if (!resizeTimeout) {
+      resizeTimeout = setTimeout(function setTime() {
+        resizeTimeout = null;
+        actualResizeHandler();
+      }, 1000);
+    }
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function actualResizeHandler() {
+    if (window.innerWidth >= WINDOW_WIDTH_MAX) {
+      if (filteredMovies.length < CARDS_QUANTITY_MAX) {
+        setCardQuantity(filteredMovies.length);
+        setMoviesIndexShown(filteredMovies.length);
+      } else {
+        setCardQuantity(CARDS_QUANTITY_MAX);
+        setMoviesIndexShown(CARDS_QUANTITY_MAX);
+        setAdditionalCardQuantity(ADDITIONAL_CARDS_QUANTITY_MAX);
+      }
+    } else if (
+      window.innerWidth >= WINDOW_WIDTH_MIDDLE &&
+      window.innerWidth < WINDOW_WIDTH_MAX
+    ) {
+      if (filteredMovies.length < CARDS_QUANTITY_MIDDLE) {
+        setCardQuantity(filteredMovies.length);
+        setMoviesIndexShown(filteredMovies.length);
+      } else {
+        setCardQuantity(CARDS_QUANTITY_MIDDLE);
+        setMoviesIndexShown(CARDS_QUANTITY_MIDDLE);
+        setAdditionalCardQuantity(ADDITIONAL_CARDS_QUANTITY_MIDDLE);
+      }
+    } else if (window.innerWidth < WINDOW_WIDTH_MIDDLE) {
+      if (filteredMovies.length < CARDS_QUANTITY_SMALL) {
+        setCardQuantity(filteredMovies.length);
+        setMoviesIndexShown(filteredMovies.length);
+      } else {
+        setCardQuantity(CARDS_QUANTITY_SMALL);
+        setMoviesIndexShown(CARDS_QUANTITY_SMALL);
+        setAdditionalCardQuantity(ADDITIONAL_CARDS_QUANTITY_SMALL);
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    actualResizeHandler();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allFilteredMovies, filteredMovies]);
+
+  React.useEffect(() => {
+    const savedData = localStorage.getItem("filteredMovies");
+    if (savedData) {
+      setAllFilteredMovies(JSON.parse(savedData));
+      setIsFilteredMovies(true);
+    }
+  }, []);
+
+  const handleAddCards = () => {
+    if (moviesIndexShown <= filteredMovies.length) {
+      if (moviesIndexShown + additionalCardQuantity > filteredMovies.length) {
+        setMoviesIndexShown(filteredMovies.length);
+      } else {
+        setMoviesIndexShown(moviesIndexShown + additionalCardQuantity);
+      }
+    }
+  };
+
+  const searchHandle = (searchValue) => {
+    console.log(movies);
+    const filteredMovies = moviesSearchHandle(movies, searchValue);
+    setAllFilteredMovies(filteredMovies);
+    setIsFilteredMovies(true);
+    if (filteredMovies.length !== 0) {
+      localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies));
+    } else {
+      localStorage.clear();
+    }
+  };
+
   return (
     <>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <section className="movies">
-        <SearchForm />
-        <Preloader />
-        <MoviesCardList movies={movies} isSavedMoviesPage={false} />
+        <SearchForm
+          setIsCheckBoxClicked={setIsCheckBoxClicked}
+          isCheckBoxClicked={isCheckBoxClicked}
+          searchHandle={searchHandle}
+        />
+
+        {isLoading && <Preloader />}
+
+        {isFilteredMovies && filteredMovies.length === 0 && (
+          <p className="movies__text">Фильмы не найдены</p>
+        )}
+
+        {isFilteredMovies && !isLoading && (
+          <MoviesCardList
+            filteredMovies={filteredMovies}
+            cardQuantity={cardQuantity}
+            moviesIndexShown={moviesIndexShown}
+            createFilm={createFilm}
+            savedMovies={savedMovies}
+            deleteFilm={deleteFilm}
+          />
+        )}
+        {moviesIndexShown !== filteredMovies.length && (
+          <button
+            type="button"
+            className="movies__additional-button"
+            onClick={handleAddCards}
+          >
+            Ещё
+          </button>
+        )}
       </section>
       <Footer />
     </>

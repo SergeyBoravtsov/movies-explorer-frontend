@@ -6,6 +6,39 @@
   align-items: center;
 }
 
+.movies__text {
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #ffffff;
+  align-self: start;
+}
+
+.movies__additional-button {
+  height: 36px;
+  width: 100%;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  border: none;
+  outline: none;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 15px;
+  text-align: center;
+  color: #000;
+  padding: 0;
+  margin: 60px 0 98px;
+}
+
+.movies__additional-button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .movies {
     width: 93%;
@@ -15,5 +48,14 @@
 @media screen and (max-width: 500px) {
   .movies {
     width: 94%;
+  }
+
+  .movies__text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .movies__additional-button {
+    min-width: 240px;
   }
 }

@@ -64,25 +64,6 @@
   opacity: 0.7;
 }
 
-.search-form__clear-button {
-  position: absolute;
-  top: 15px;
-  right: 63px;
-  background-color: transparent;
-  height: 20px;
-  width: 20px;
-  border: none;
-  outline: none;
-  background-image: url("../../images/clear-button.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-}
-
-.search-form__clear-button:hover {
-  opacity: 0.7;
-}
-
 .search-form__input-error {
   color: #ee3465;
   font-size: 13px;

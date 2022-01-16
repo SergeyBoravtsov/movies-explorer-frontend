@@ -7,11 +7,10 @@ import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 
-function Main() {
+function Main({ isLoggedIn }) {
   return (
-    <>
-      <Header isMainPage={true}/>
-
+    <div>
+      <Header isLoggedIn={isLoggedIn} />
       <main className="main-page">
         <Promo />
         <AboutProject />
@@ -21,7 +20,7 @@ function Main() {
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }
 

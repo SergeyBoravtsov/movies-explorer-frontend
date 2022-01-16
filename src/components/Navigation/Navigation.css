@@ -33,6 +33,10 @@
   display: none;
 }
 
+.navigation__link_color_white {
+  color: #fff;
+}
+
 @media screen and (max-width: 768px) {
   .navigation__link_displayed {
     display: block;
