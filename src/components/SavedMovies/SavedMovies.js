@@ -44,10 +44,6 @@ function SavedMovies({ savedMovies, deleteFilm, isLoggedIn }) {
     setIsFilteredMovies(true);
   };
 
-  const clearSearchHandle = () => {
-    setIsFilteredMovies(false);
-  };
-
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
@@ -56,7 +52,6 @@ function SavedMovies({ savedMovies, deleteFilm, isLoggedIn }) {
           searchHandle={searchHandle}
           setIsCheckBoxClicked={setIsCheckBoxClicked}
           isCheckBoxClicked={isCheckBoxClicked}
-          clearSearchHandle={clearSearchHandle}
         />
 
         {savedMovies.length === 0 ||

@@ -9,7 +9,7 @@ import Footer from "../Footer/Footer";
 
 function Main({ isLoggedIn }) {
   return (
-    <div>
+    <>
       <Header isLoggedIn={isLoggedIn} />
       <main className="main-page">
         <Promo />
@@ -20,7 +20,7 @@ function Main({ isLoggedIn }) {
       </main>
 
       <Footer />
-    </div>
+    </>
   );
 }
 
