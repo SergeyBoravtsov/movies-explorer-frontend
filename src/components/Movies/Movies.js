@@ -36,23 +36,59 @@ function Movies({
   const [moviesIndexShown, setMoviesIndexShown] = React.useState(0);
   const [cardQuantity, setCardQuantity] = React.useState(0);
   const [additionalCardQuantity, setAdditionalCardQuantity] = React.useState(0);
+  const [initialSearchValue, setInitialSearchValue] = React.useState("");
+
+  const checkboxRef = React.useRef();
 
   // создаем массив с фильтрованными короткометражками
   React.useEffect(() => {
+    // отбираем из массива фильмов с совпадением поисковой фразы те фильмы, где длительность <= 40 мин
     setShortFilteredMovies(shortMoviesSearchHandle(allFilteredMovies));
   }, [allFilteredMovies]);
 
+  // определяем массив filteredMovies - массив фильмов, которые нужно отобразить в данный момент (в зависимости от положения переключателя)
   React.useEffect(() => {
+    checkboxRef.current = isCheckBoxClicked; // запишем в реф значение чекбокса
     if (isCheckBoxClicked && filteredMovies) {
       setFilteredMovies(shortFilteredMovies);
     } else {
       setFilteredMovies(allFilteredMovies);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCheckBoxClicked, allFilteredMovies]);
+  }, [
+    isCheckBoxClicked,
+    allFilteredMovies,
+    shortFilteredMovies,
+    filteredMovies,
+  ]);
+
+  React.useEffect(() => {
+    // достаём данные из хранилища
+    const savedData = localStorage.getItem("filteredMovies");
+    const savedCheckBoxIsClicked = localStorage.getItem("checkBoxIsClicked");
+    const savedSearchValue = localStorage.getItem("MoviesSearchValue");
+    setInitialSearchValue(savedSearchValue);
+
+    if (savedData) {
+      setAllFilteredMovies(JSON.parse(savedData));
+      setIsFilteredMovies(true);
+    }
+
+    if (savedCheckBoxIsClicked) {
+      setIsCheckBoxClicked(JSON.parse(savedCheckBoxIsClicked));
+    }
+
+    // при размонтировании Movies выполнить следующее:
+    return () => {
+      localStorage.setItem("checkBoxIsClicked", checkboxRef.current);
+      window.removeEventListener("resize", resizeThrottler, false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   window.addEventListener("resize", resizeThrottler, false);
+
   let resizeTimeout;
+
   function resizeThrottler() {
     if (!resizeTimeout) {
       resizeTimeout = setTimeout(function setTime() {
@@ -62,7 +98,7 @@ function Movies({
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // количество карточек в выдаче (и при нажатии на кнопку Ещё) в зависимости от ширины окна
   function actualResizeHandler() {
     if (window.innerWidth >= WINDOW_WIDTH_MAX) {
       if (filteredMovies.length < CARDS_QUANTITY_MAX) {
@@ -99,17 +135,10 @@ function Movies({
 
   React.useEffect(() => {
     actualResizeHandler();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allFilteredMovies, filteredMovies]);
 
-  React.useEffect(() => {
-    const savedData = localStorage.getItem("filteredMovies");
-    if (savedData) {
-      setAllFilteredMovies(JSON.parse(savedData));
-      setIsFilteredMovies(true);
-    }
-  }, []);
-
+  // обработчик нажатия на кнопку Ещё
   const handleAddCards = () => {
     if (moviesIndexShown <= filteredMovies.length) {
       if (moviesIndexShown + additionalCardQuantity > filteredMovies.length) {
@@ -120,15 +149,16 @@ function Movies({
     }
   };
 
+  // обработчик сабмита для компонента SearchForm
   const searchHandle = (searchValue) => {
-    console.log(movies);
     const filteredMovies = moviesSearchHandle(movies, searchValue);
     setAllFilteredMovies(filteredMovies);
     setIsFilteredMovies(true);
+    localStorage.setItem("MoviesSearchValue", searchValue);
     if (filteredMovies.length !== 0) {
       localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies));
     } else {
-      localStorage.clear();
+      localStorage.removeItem("filteredMovies");
     }
   };
 
@@ -140,12 +170,13 @@ function Movies({
           setIsCheckBoxClicked={setIsCheckBoxClicked}
           isCheckBoxClicked={isCheckBoxClicked}
           searchHandle={searchHandle}
+          initialSearchValue={initialSearchValue}
         />
 
         {isLoading && <Preloader />}
 
         {isFilteredMovies && filteredMovies.length === 0 && (
-          <p className="movies__text">Фильмы не найдены</p>
+          <p className="movies__text">Ничего не найдено</p>
         )}
 
         {isFilteredMovies && !isLoading && (

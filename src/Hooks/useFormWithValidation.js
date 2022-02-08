@@ -11,14 +11,15 @@ export const useFormWithValidation = () => {
     setIsFocused(true);
   };
 
+  // срабатывает на каждое изменение инпута в компоненте SearchForm
   const handleChange = (event) => {
-    const target = event.target;
+    const target = event.target; // инпут компонента SearchForm
     const name = target.name;
     const value = target.value;
     const error = validateForm(name, value);
     setErrors(validateForm(name, value));
     setValues({ ...values, [name]: value });
-    if (Object.keys(error).length === 0) {
+    if (Object.keys(error).length === 0) { // если объект ошибок пуст
       setIsValid(target.closest("form").checkValidity());
     }
   };

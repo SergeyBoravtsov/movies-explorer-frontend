@@ -70,7 +70,7 @@ export const getSavedMovies = () => {
 
 //добавление карточки на сервер
 export const addCard = (data) => {
-  return fetch(`${MAIN_API_URL}/movies `, {
+  return fetch(`${MAIN_API_URL}/movies`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const addCard = (data) => {
 
 //удаление карточки с сервера
 export const deleteCard = (id) => {
-  return fetch(`${MAIN_API_URL}/movies/${id} `, {
+  return fetch(`${MAIN_API_URL}/movies/${id}`, {
     method: "DELETE",
     credentials: "include",
     headers: {

@@ -2,6 +2,18 @@ import React from "react";
 import "./PageNotFound.css";
 
 function PageNotFound({ history }) {
+
+  function handleClick() {
+    history.goBack();
+  }
+
+  React.useEffect(() => {
+    console.log("Страница 404 монтирована");
+    return () => {
+      console.log("Страница 404 размонтирована");
+    };
+  }, []);
+
   return (
     <section className="not-found">
       <h2 className="not-found__title">404</h2>
@@ -9,7 +21,7 @@ function PageNotFound({ history }) {
       <button
         className="not-found__back-button"
         type="button"
-        onClick={history.goBack}
+        onClick={handleClick}
       >
         Назад
       </button>

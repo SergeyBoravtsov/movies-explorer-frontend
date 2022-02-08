@@ -41,7 +41,7 @@ function MoviesCard({ card, createFilm, savedMovies, deleteFilm }) {
         setIsAddedToSaved(false);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -54,7 +54,7 @@ function MoviesCard({ card, createFilm, savedMovies, deleteFilm }) {
           </p>
         </figcaption>
 
-        <a href={card.trailerLink} target="_blank" rel="noreferrer">
+        <a href={card.trailer} target="_blank" rel="noreferrer">
           <Route path="/saved-movies">
             <img
               className="movie-card__image"
@@ -62,6 +62,8 @@ function MoviesCard({ card, createFilm, savedMovies, deleteFilm }) {
               alt={card.nameRU}
             />
           </Route>
+        </a>
+        <a href={card.trailerLink} target="_blank" rel="noreferrer">
           <Route path="/movies">
             <img
               className="movie-card__image"

@@ -1,6 +1,6 @@
 export const WINDOW_WIDTH_MAX = 1280;
 export const CARDS_QUANTITY_MAX = 12;
-export const ADDITIONAL_CARDS_QUANTITY_MAX = 4;
+export const ADDITIONAL_CARDS_QUANTITY_MAX = 3;
 
 export const WINDOW_WIDTH_MIDDLE = 768;
 export const CARDS_QUANTITY_MIDDLE = 8;

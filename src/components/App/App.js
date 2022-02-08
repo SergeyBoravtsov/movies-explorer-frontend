@@ -8,6 +8,7 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import Profile from "../Profile/Profile";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
+import InfoTooltip from "../InfoTooltip/InfoTooltip.js";
 
 import {
   register,
@@ -36,6 +37,10 @@ function App() {
   const [isEditError, setIsEditError] = React.useState(false);
   const [isEditSuccess, setIsEditSuccess] = React.useState(false);
 
+  const [toolTipStatus, setToolTipStatus] = React.useState("fail"); //начальное сообщение попапа
+  const [toolTipMessage, setToolTipMessage] = React.useState("");
+  const [toolTipOpen, setToolTipOpen] = React.useState(false); //
+
   //проверяем зарегистрирован ли пользователь
   const isLoggedInCheck = () => {
     getUserInfo()
@@ -49,7 +54,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -64,12 +69,12 @@ function App() {
       getUserInfo()
         .then((data) => {
           if (data) {
-            console.log(data);
+            // cconsole.log(data);
             setCurrentUser(data);
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
 
       setIsLoading(true);
@@ -81,7 +86,7 @@ function App() {
             setMovies(moviesInfo);
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => console.error(err))
         .finally(() => setIsLoading(false));
 
       // получаем сохранённые фильмы с https://api.sergbor.movies.nomoredomains.rocks/movies
@@ -93,7 +98,7 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
       history.push("/movies");
     }
@@ -109,6 +114,8 @@ function App() {
       })
       .catch((err) => {
         setIsRegisteredError(true);
+        setToolTipStatus("fail");
+        setToolTipOpen(true);
       });
   };
 
@@ -123,6 +130,8 @@ function App() {
       .catch((err) => {
         setIsLoginError(true);
         console.log(err);
+        setToolTipStatus("fail");
+        setToolTipOpen(true);
       });
   };
 
@@ -136,6 +145,8 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setToolTipStatus("fail");
+        setToolTipOpen(true);
       });
   };
 
@@ -153,6 +164,8 @@ function App() {
       .catch((err) => {
         console.log(err);
         setIsEditError(true);
+        setToolTipStatus("fail");
+        setToolTipOpen(true);
       });
   };
 
@@ -161,8 +174,16 @@ function App() {
     addCard(card)
       .then((movieInfo) => {
         setSavedMovies([movieInfo, ...savedMovies]);
+        setToolTipOpen(true);
+        setToolTipStatus("success");
+        setToolTipMessage("Фильм успешно добавлен в сохранённые");
+        console.log("карточка добавлена");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setToolTipStatus("fail");
+        setToolTipOpen(true);
+      });
   };
 
   // удаление фильма из избранного
@@ -173,9 +194,23 @@ function App() {
           (savedMovie) => savedMovie._id !== cardId
         );
         setSavedMovies(newMovies);
+        setToolTipOpen(true);
+        setToolTipStatus("success");
+        setToolTipMessage("Карточка удалена из сохранённых");
+        console.log("карточка удалена");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setToolTipStatus("fail");
+        setToolTipOpen(true);
+      });
   };
+
+  // закрытие попапа с сообщением
+  function handlePopupClosing() {
+    setToolTipOpen(false);
+    setToolTipMessage("");
+  }
 
   return (
     <div className="page">
@@ -230,6 +265,13 @@ function App() {
             <PageNotFound history={history} />
           </Route>
         </Switch>
+
+        <InfoTooltip
+          isOpen={toolTipOpen}
+          status={toolTipStatus}
+          onClose={handlePopupClosing}
+          message={toolTipMessage}
+        />
       </CurrentUserContext.Provider>
     </div>
   );

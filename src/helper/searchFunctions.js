@@ -11,7 +11,6 @@ export const shortMoviesSearchHandle = (movies) => {
 
 export const moviesSearchHandle = (movies, searchValue) => {
   return movies.filter((movie) => {
-    console.log(movie);
     return movie.nameRU.toLowerCase().includes(searchValue.toLowerCase());
   });
 };
