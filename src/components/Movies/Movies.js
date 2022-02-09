@@ -14,7 +14,7 @@ import {
   WINDOW_WIDTH_MIDDLE,
   CARDS_QUANTITY_SMALL,
   ADDITIONAL_CARDS_QUANTITY_SMALL,
-} from "../../helper/MoviesConstants";
+} from "../../utils/constants";
 import {
   shortMoviesSearchHandle,
   moviesSearchHandle,

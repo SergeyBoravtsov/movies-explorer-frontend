@@ -69,6 +69,15 @@
   cursor: pointer;
 }
 
+.profile__submit-button[disabled] {
+  color: #e8e8e8;
+  cursor:default;
+}
+
+.profile__submit-button[disabled]:hover {
+  opacity: 1;
+}
+
 .profile__form-error {
   color: #ee3465;
   font-size: 13px;

@@ -1,4 +1,4 @@
-import { SHORT_FILM_DURATION } from "./MoviesConstants";
+import { SHORT_FILM_DURATION } from "../utils/constants";
 
 export const shortMoviesSearchHandle = (movies) => {
   return movies.reduce((result, movieInfo) => {
