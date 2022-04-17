@@ -1,4 +1,4 @@
-# Дипломный проект (frontend)
+# Дипломный проект Movies-explorer(frontend)
 
 ## Описание
 
