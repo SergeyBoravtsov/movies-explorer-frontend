@@ -7,6 +7,10 @@
 - Адаптивная вёрстка
 - ReactJS, JSX
 
+## Запуск проекта
+`npm i` - устанавливает зависимости
+`npm start` — запускает проект локально
+
 ----
 Ссылка на проект:
 https://sergbor.movies.nomoredomains.rocks/
