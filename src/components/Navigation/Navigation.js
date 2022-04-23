@@ -2,7 +2,7 @@ import React from "react";
 import "./Navigation.css";
 import { Link, Route } from "react-router-dom";
 
-function Navigation({ isMenuOpen }) {
+function Navigation({ isMenuOpen, isLoggedIn }) {
   return (
     <nav className="navigation">
       <ul className="navigation__list">
@@ -13,6 +13,28 @@ function Navigation({ isMenuOpen }) {
             </Link>
           </li>
         )}
+
+        {isLoggedIn && (
+          <Route exact path={"/"}>
+            <li className="navigation__list-item">
+              <Link
+                className={`navigation__link navigation__link_color_white`}
+                to="/movies"
+              >
+                Фильмы
+              </Link>
+            </li>
+            <li className="navigation__list-item">
+              <Link
+                className={`navigation__link navigation__link_color_white`}
+                to="/saved-movies"
+              >
+                Сохраненные фильмы
+              </Link>
+            </li>
+          </Route>
+        )}
+
         <Route path={"/movies"}>
           <li className="navigation__list-item">
             <Link
@@ -52,10 +74,7 @@ function Navigation({ isMenuOpen }) {
             </Link>
           </li>
           <li className="navigation__list-item">
-            <Link
-              className={`navigation__link`}
-              to="/saved-movies"
-            >
+            <Link className={`navigation__link`} to="/saved-movies">
               Сохраненные фильмы
             </Link>
           </li>

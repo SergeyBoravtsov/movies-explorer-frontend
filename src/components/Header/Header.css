@@ -10,7 +10,6 @@
 }
 
 .header_page_notAuthorized {
-  /* min-height: 217px; */
   min-width: 396px;
   display: flex;
   flex-direction: column;
@@ -110,10 +109,6 @@
   .header_page_authorized {
     justify-content: space-between;
   }
-
- /*  .header_page_notAuthorized {
-    min-height: 379px;
-  } */
 
   .header__logo {
     margin-left: 30px;

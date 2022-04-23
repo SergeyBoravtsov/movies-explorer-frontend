@@ -4,7 +4,7 @@ import Navigation from "../Navigation/Navigation";
 import { Link } from "react-router-dom";
 import profileIcon from "../../images/profile-icon.svg";
 
-function BurgerMenu() {
+function BurgerMenu({ isLoggedIn }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const openMenu = () => setIsMenuOpen(true);
@@ -29,7 +29,7 @@ function BurgerMenu() {
           />
         )}
 
-        <Navigation isMenuOpen={isMenuOpen} />
+        <Navigation isMenuOpen={isMenuOpen} isLoggedIn={isLoggedIn} />
 
         <Link to="/profile" className="header__link">
           <img
