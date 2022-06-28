@@ -22,5 +22,4 @@
 
 ----
 Ссылка на проект:
-https://sergbor.movies.nomoredomains.rocks/
-(может не работать, если истёк грант на Яндекс Облаке)
+https://movies-explorer-frontend-sergeyboravtsov.vercel.app/
