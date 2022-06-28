@@ -1,5 +1,5 @@
 export const MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies/';
-export const MAIN_API_URL = 'https://movies-explorer-api-sergeyboravtsov.vercel.app/';
+export const MAIN_API_URL = 'https://movies-sergeyboravtsov-api.herokuapp.com/';
 // export const MAIN_API_URL = 'https://api.sergbor.movies.nomoredomains.rocks';
 // export const MAIN_API_URL = 'http://localhost:3001';
 
